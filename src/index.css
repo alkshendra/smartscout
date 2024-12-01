@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	--color-primary: #5183e5;
+	--color-primary-active: #3b75e7;
+	--color-surface: #e4eefe;
+	--color-surface-variant: #c0d6fa;
+	--color-on-surface: #1f1f1f;
+}
+
+body {
+	margin: 0;
+	overflow: hidden;
+	background: transparent;
+	color: var(--color-on-surface);
+}

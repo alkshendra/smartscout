@@ -1,0 +1,14 @@
+#handy-sidebar-iframe {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 500px;
+	height: 100vh;
+	border: none;
+	z-index: 2147483647;
+	transition: transform 0.3s ease;
+}
+
+#handy-sidebar-iframe.hidden {
+	transform: translateX(100%);
+}

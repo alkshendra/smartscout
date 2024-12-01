@@ -1,0 +1,10 @@
+{
+	"manifest_version": 3,
+	"name": "Handy",
+	"version": "1.0.0",
+	"description": "Quick access to handy tools in a beautiful Material Design interface",
+	"action": {
+		"default_popup": "index.html"
+	},
+	"permissions": ["activeTab"]
+}
