@@ -1,45 +1,46 @@
 import React, { useState } from "react";
-import { Languages } from "lucide-react";
+import { Notebook } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { TabView } from "../shared/TabView";
+import { ContextInput } from "../shared/ContextInput";
 import { ContentInput } from "../shared/ContentInput";
-import { LanguageSelect } from "../shared/LanguageSelect";
 import { usePageInfo } from "../../hooks/usePageInfo";
 import { aiPrompt } from "../../utils/aiPrompt";
 
 const tabs = [
 	{ id: "new", label: "New Content" },
-	{ id: "translate", label: "Translate Page" },
+	{ id: "rewrite", label: "Rewrite Page" },
 ];
 
-export function Translator() {
+export function WritingAssistant() {
 	const pageInfo = usePageInfo();
 	const [activeTab, setActiveTab] = useState("new");
 	const [content, setContent] = useState("");
-	const [targetLang, setTargetLang] = useState("es");
-	const [translation, setTranslation] = useState("");
+	const [context, setContext] = useState("");
+	const [result, setResult] = useState("");
 	const [loading, setLoading] = useState(false);
 
-	const handleTranslate = async () => {
+	const handleWrite = async () => {
 		if (loading) return;
 
 		setLoading(true);
-		setTranslation("");
+		setResult("");
 
 		try {
-			const prompt = `Translate the following content to ${targetLang}:\n\n${
-				activeTab === "new" ? content : pageInfo?.content || ""
-			}`;
+			const prompt =
+				activeTab === "new"
+					? `Write content based on this context: ${context}\n\nContent to work with: ${content}`
+					: `Rewrite this content based on the context: ${context}\n\nContent to rewrite: ${
+							pageInfo?.content || ""
+					  }`;
 
 			await aiPrompt(prompt, "", {
 				onChunk: (chunk) => {
-					setTranslation((prev) => prev + chunk);
+					setResult((prev) => prev + chunk);
 				},
 				onError: (error) => {
-					console.error("Failed to translate:", error);
-					setTranslation(
-						"Failed to translate content. Please try again."
-					);
+					console.error("Failed to write:", error);
+					setResult("Failed to generate content. Please try again.");
 				},
 			});
 		} finally {
@@ -50,8 +51,8 @@ export function Translator() {
 	return (
 		<div className="p-4">
 			<div className="mb-6 flex items-center gap-2">
-				<Languages size={24} className="text-primary" />
-				<h2 className="text-xl font-semibold">Translator</h2>
+				<Notebook size={24} className="text-primary" />
+				<h2 className="text-xl font-semibold">Writing Assistant</h2>
 			</div>
 
 			<div className="space-y-4">
@@ -61,30 +62,32 @@ export function Translator() {
 					onTabChange={setActiveTab}
 				/>
 
-				<LanguageSelect value={targetLang} onChange={setTargetLang} />
+				<ContextInput
+					value={context}
+					onChange={setContext}
+					placeholder="e.g., Make it more formal, write it in a friendly tone..."
+				/>
 
 				{activeTab === "new" && (
 					<ContentInput
 						value={content}
 						onChange={setContent}
-						placeholder="Enter text to translate..."
+						placeholder="Enter your content here..."
 					/>
 				)}
 
 				<button
-					onClick={handleTranslate}
-					disabled={
-						loading || (activeTab === "translate" && !pageInfo)
-					}
+					onClick={handleWrite}
+					disabled={loading || (activeTab === "rewrite" && !pageInfo)}
 					className="w-full rounded-lg bg-primary py-2 text-white hover:opacity-90 disabled:opacity-50"
 				>
-					{loading ? "Translating..." : "Translate"}
+					{loading ? "Writing..." : "Write"}
 				</button>
 
-				{translation && (
+				{result && (
 					<div className="rounded-lg bg-surface-variant p-4">
 						<div className="prose prose-sm max-w-none dark:prose-invert">
-							<ReactMarkdown>{translation}</ReactMarkdown>
+							<ReactMarkdown>{result}</ReactMarkdown>
 						</div>
 					</div>
 				)}

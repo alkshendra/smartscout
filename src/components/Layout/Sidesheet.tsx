@@ -8,6 +8,7 @@ interface SidesheetProps {
 	children: React.ReactNode;
 	showBack?: boolean;
 	onBack?: () => void;
+	title?: string;
 }
 
 export function Sidesheet({
@@ -15,6 +16,7 @@ export function Sidesheet({
 	children,
 	showBack,
 	onBack,
+	title,
 }: SidesheetProps) {
 	const time = useTime();
 	const pageInfo = usePageInfo();
@@ -33,7 +35,7 @@ export function Sidesheet({
 						</button>
 					)}
 					<span className="text-xl font-medium text-primary">
-						{time}
+						{title || time}
 					</span>
 				</div>
 				<button

@@ -19,12 +19,6 @@ interface App {
 }
 
 export const apps: App[] = [
-	// {
-	// 	id: "search",
-	// 	name: "Search",
-	// 	description: "Quick search across multiple engines",
-	// 	icon: Search,
-	// },
 	{
 		id: "calculator",
 		name: "Natural Calculator",
@@ -50,7 +44,7 @@ export const apps: App[] = [
 		icon: Link,
 	},
 	{
-		id: "notepad",
+		id: "writingAssistant",
 		name: "Writing Assistant",
 		description: "Quick notes and text editing",
 		icon: Notebook,
@@ -74,9 +68,9 @@ export const apps: App[] = [
 		icon: Youtube,
 	},
 	{
-		id: "frestyle",
+		id: "freestyle",
 		name: "Freestyle",
-		description: "Chat",
+		description: "Chat with AI",
 		icon: Bot,
 	},
 ];
