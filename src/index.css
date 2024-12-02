@@ -4,7 +4,6 @@
 
 :root {
 	--color-primary: #5183e5;
-	--color-primary-active: #3b75e7;
 	--color-surface: #e4eefe;
 	--color-surface-variant: #c0d6fa;
 	--color-on-surface: #1f1f1f;
@@ -15,4 +14,28 @@ body {
 	overflow: hidden;
 	background: transparent;
 	color: var(--color-on-surface);
+}
+
+/* Dark mode overrides */
+.dark {
+	color-scheme: dark;
+}
+
+.dark .prose {
+	--tw-prose-body: var(--color-on-surface);
+	--tw-prose-headings: var(--color-on-surface);
+	--tw-prose-lead: var(--color-on-surface);
+	--tw-prose-links: var(--color-primary);
+	--tw-prose-bold: var(--color-on-surface);
+	--tw-prose-counters: var(--color-on-surface);
+	--tw-prose-bullets: var(--color-on-surface);
+	--tw-prose-hr: var(--color-surface-variant);
+	--tw-prose-quotes: var(--color-on-surface);
+	--tw-prose-quote-borders: var(--color-surface-variant);
+	--tw-prose-captions: var(--color-on-surface);
+	--tw-prose-code: var(--color-on-surface);
+	--tw-prose-pre-code: var(--color-on-surface);
+	--tw-prose-pre-bg: var(--color-surface-variant);
+	--tw-prose-th-borders: var(--color-surface-variant);
+	--tw-prose-td-borders: var(--color-surface-variant);
 }

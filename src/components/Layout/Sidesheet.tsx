@@ -54,7 +54,7 @@ export function Sidesheet({
 					<h2 className="text-lg truncate">{pageInfo.title}</h2>
 				</div>
 			)}
-			<div className="min-h-[calc(100vh-4rem)] h-auto bg-surface rounded-[56px] rounded-br-[0px]">
+			<div className="min-h-[calc(100vh-4rem)] h-auto bg-surface rounded-[56px] rounded-br-[0px] p-8">
 				{children}
 			</div>
 		</div>

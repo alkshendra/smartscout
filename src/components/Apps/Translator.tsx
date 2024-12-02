@@ -5,7 +5,7 @@ import { TabView } from "../shared/TabView";
 import { ContentInput } from "../shared/ContentInput";
 import { LanguageSelect } from "../shared/LanguageSelect";
 import { usePageInfo } from "../../hooks/usePageInfo";
-import { aiPrompt } from "../../utils/aiPrompt";
+import { useTranslation } from "../../hooks/useTranslation";
 
 const tabs = [
 	{ id: "new", label: "New Content" },
@@ -14,37 +14,28 @@ const tabs = [
 
 export function Translator() {
 	const pageInfo = usePageInfo();
+	const {
+		translate,
+		isTranslating,
+		error,
+		detectedLanguage,
+		getLanguageDisplay,
+	} = useTranslation();
 	const [activeTab, setActiveTab] = useState("new");
 	const [content, setContent] = useState("");
 	const [targetLang, setTargetLang] = useState("es");
 	const [translation, setTranslation] = useState("");
-	const [loading, setLoading] = useState(false);
 
 	const handleTranslate = async () => {
-		if (loading) return;
+		const textToTranslate =
+			activeTab === "new" ? content : pageInfo?.content || "";
 
-		setLoading(true);
-		setTranslation("");
-
-		try {
-			const prompt = `Translate the following content to ${targetLang}:\n\n${
-				activeTab === "new" ? content : pageInfo?.content || ""
-			}`;
-
-			await aiPrompt(prompt, "", {
-				onChunk: (chunk) => {
-					setTranslation((prev) => prev + chunk);
-				},
-				onError: (error) => {
-					console.error("Failed to translate:", error);
-					setTranslation(
-						"Failed to translate content. Please try again."
-					);
-				},
-			});
-		} finally {
-			setLoading(false);
-		}
+		await translate(textToTranslate, {
+			targetLanguage: targetLang,
+			onProgress: (chunk) => {
+				setTranslation(chunk);
+			},
+		});
 	};
 
 	return (
@@ -61,6 +52,13 @@ export function Translator() {
 					onTabChange={setActiveTab}
 				/>
 
+				{detectedLanguage && (
+					<div className="text-sm text-gray-600">
+						{detectedLanguage.confidence * 100}% sure this is{" "}
+						{getLanguageDisplay(detectedLanguage.detectedLanguage)}
+					</div>
+				)}
+
 				<LanguageSelect value={targetLang} onChange={setTargetLang} />
 
 				{activeTab === "new" && (
@@ -74,12 +72,19 @@ export function Translator() {
 				<button
 					onClick={handleTranslate}
 					disabled={
-						loading || (activeTab === "translate" && !pageInfo)
+						isTranslating ||
+						(activeTab === "translate" && !pageInfo)
 					}
 					className="w-full rounded-lg bg-primary py-2 text-white hover:opacity-90 disabled:opacity-50"
 				>
-					{loading ? "Translating..." : "Translate"}
+					{isTranslating ? "Translating..." : "Translate"}
 				</button>
+
+				{error && (
+					<div className="rounded-lg bg-red-100 p-4 text-red-700">
+						{error}
+					</div>
+				)}
 
 				{translation && (
 					<div className="rounded-lg bg-surface-variant p-4">

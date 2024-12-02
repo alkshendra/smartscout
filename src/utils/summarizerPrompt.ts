@@ -46,7 +46,6 @@ export async function summarizerPrompt({
 			fullText += chunk;
 
 			if (callbacks?.onChunk) {
-				console.log(chunk);
 				callbacks.onChunk(chunk);
 			}
 		}

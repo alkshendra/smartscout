@@ -49,49 +49,42 @@ export function WritingAssistant() {
 	};
 
 	return (
-		<div className="p-4">
-			<div className="mb-6 flex items-center gap-2">
-				<Notebook size={24} className="text-primary" />
-				<h2 className="text-xl font-semibold">Writing Assistant</h2>
-			</div>
+		<div className="space-y-4">
+			<TabView
+				tabs={tabs}
+				activeTab={activeTab}
+				onTabChange={setActiveTab}
+			/>
 
-			<div className="space-y-4">
-				<TabView
-					tabs={tabs}
-					activeTab={activeTab}
-					onTabChange={setActiveTab}
+			<ContextInput
+				value={context}
+				onChange={setContext}
+				placeholder="e.g., Make it more formal, write it in a friendly tone..."
+			/>
+
+			{activeTab === "new" && (
+				<ContentInput
+					value={content}
+					onChange={setContent}
+					placeholder="Enter your content here..."
 				/>
+			)}
 
-				<ContextInput
-					value={context}
-					onChange={setContext}
-					placeholder="e.g., Make it more formal, write it in a friendly tone..."
-				/>
+			<button
+				onClick={handleWrite}
+				disabled={loading || (activeTab === "rewrite" && !pageInfo)}
+				className="w-full rounded-lg bg-primary py-2 text-white hover:opacity-90 disabled:opacity-50"
+			>
+				{loading ? "Writing..." : "Write"}
+			</button>
 
-				{activeTab === "new" && (
-					<ContentInput
-						value={content}
-						onChange={setContent}
-						placeholder="Enter your content here..."
-					/>
-				)}
-
-				<button
-					onClick={handleWrite}
-					disabled={loading || (activeTab === "rewrite" && !pageInfo)}
-					className="w-full rounded-lg bg-primary py-2 text-white hover:opacity-90 disabled:opacity-50"
-				>
-					{loading ? "Writing..." : "Write"}
-				</button>
-
-				{result && (
-					<div className="rounded-lg bg-surface-variant p-4">
-						<div className="prose prose-sm max-w-none dark:prose-invert">
-							<ReactMarkdown>{result}</ReactMarkdown>
-						</div>
+			{result && (
+				<div className="rounded-lg bg-surface-variant p-4">
+					<div className="prose prose-sm max-w-none dark:prose-invert">
+						<ReactMarkdown>{result}</ReactMarkdown>
 					</div>
-				)}
-			</div>
+				</div>
+			)}
 		</div>
 	);
 }

@@ -35,29 +35,22 @@ export function LinkExtractor() {
 	};
 
 	return (
-		<div className="p-4">
-			<div className="mb-6 flex items-center gap-2">
-				<Link size={24} className="text-primary" />
-				<h2 className="text-xl font-semibold">Link Extractor</h2>
-			</div>
+		<div className="space-y-4">
+			<button
+				onClick={handleExtract}
+				disabled={loading || !pageInfo}
+				className="w-full rounded-lg bg-primary py-2 text-white hover:opacity-90 disabled:opacity-50"
+			>
+				{loading ? "Extracting..." : "Extract Links"}
+			</button>
 
-			<div className="space-y-4">
-				<button
-					onClick={handleExtract}
-					disabled={loading || !pageInfo}
-					className="w-full rounded-lg bg-primary py-2 text-white hover:opacity-90 disabled:opacity-50"
-				>
-					{loading ? "Extracting..." : "Extract Links"}
-				</button>
-
-				{links && (
-					<div className="rounded-lg bg-surface-variant p-4">
-						<div className="prose prose-sm max-w-none dark:prose-invert">
-							<ReactMarkdown>{links}</ReactMarkdown>
-						</div>
+			{links && (
+				<div className="rounded-lg bg-surface-variant p-4">
+					<div className="prose prose-sm max-w-none dark:prose-invert">
+						<ReactMarkdown>{links}</ReactMarkdown>
 					</div>
-				)}
-			</div>
+				</div>
+			)}
 		</div>
 	);
 }

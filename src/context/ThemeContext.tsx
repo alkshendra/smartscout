@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { type ThemeColor } from "../types";
 import { themeColors } from "../styles/theme";
 
@@ -14,15 +14,26 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 		themeColors[0]
 	);
 
+	useEffect(() => {
+		const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+		const handleChange = (e: MediaQueryListEvent) => {
+			const themeId = e.matches ? "black" : "blue";
+			// Switch to corresponding theme when system preference changes
+			const newTheme = themeColors.find((theme) => theme.id === themeId);
+			if (newTheme) {
+				setTheme(newTheme);
+			}
+		};
+
+		mediaQuery.addEventListener("change", handleChange);
+		return () => mediaQuery.removeEventListener("change", handleChange);
+	}, []);
+
 	const setTheme = (theme: ThemeColor) => {
 		setCurrentTheme(theme);
 		document.documentElement.style.setProperty(
 			"--color-primary",
 			theme.primary
-		);
-		document.documentElement.style.setProperty(
-			"--color-primary-active",
-			theme.primaryActive
 		);
 		document.documentElement.style.setProperty(
 			"--color-surface",

@@ -11,28 +11,33 @@ import { ThemeProvider } from "./context/ThemeContext";
 import { ThemePicker } from "./components/ThemePicker";
 import { apps } from "./data/apps";
 
-export default function App() {
-	const [currentApp, setCurrentApp] = useState<string | null>(null);
+interface AppState {
+	id: string | null;
+	options?: Record<string, any>;
+}
 
-	const handleAppClick = (appId: string) => {
-		setCurrentApp(appId);
+export default function App() {
+	const [currentApp, setCurrentApp] = useState<AppState>({ id: null });
+
+	const handleAppClick = (appId: string, options?: Record<string, any>) => {
+		setCurrentApp({ id: appId, options });
 	};
 
 	const handleBack = () => {
-		setCurrentApp(null);
+		setCurrentApp({ id: null });
 	};
 
 	const handleClose = () => {
 		window.parent.postMessage({ action: "toggle_sidebar" }, "*");
 	};
 
-	const getCurrentAppTitle = () => {
-		if (!currentApp) return null;
-		return apps.find((app) => app.id === currentApp)?.name || null;
-	};
+	const getCurrentAppTitle = () =>
+		currentApp.id
+			? apps.find((app) => app.id === currentApp.id)?.name || ""
+			: "";
 
 	const renderContent = () => {
-		switch (currentApp) {
+		switch (currentApp.id) {
 			case "calculator":
 				return <Calculator />;
 			case "translator":
@@ -40,7 +45,9 @@ export default function App() {
 			case "writingAssistant":
 				return <WritingAssistant />;
 			case "summarizer":
-				return <Summarizer />;
+				return (
+					<Summarizer initialTab={currentApp.options?.initialTab} />
+				);
 			case "links":
 				return <LinkExtractor />;
 			case "freestyle":
@@ -55,13 +62,13 @@ export default function App() {
 			<div className="h-screen bg-surface">
 				<Sidesheet
 					onClose={handleClose}
-					showBack={currentApp !== null}
+					showBack={currentApp.id !== null}
 					onBack={handleBack}
 					title={getCurrentAppTitle()}
 				>
 					{renderContent()}
 				</Sidesheet>
-				{currentApp === null && <ThemePicker />}
+				{currentApp.id === null && <ThemePicker />}
 			</div>
 		</ThemeProvider>
 	);

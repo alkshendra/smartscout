@@ -20,7 +20,7 @@ export function TabView({ tabs, activeTab, onTabChange }: TabViewProps) {
 					key={tab.id}
 					onClick={() => onTabChange(tab.id)}
 					className={cn(
-						"flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+						"flex-1 p-2 rounded-lg text-sm font-medium transition-colors",
 						activeTab === tab.id
 							? "bg-primary text-white"
 							: "text-primary hover:bg-surface/50"

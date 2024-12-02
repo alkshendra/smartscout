@@ -7,6 +7,8 @@ import {
 	Link,
 	SearchCheck,
 	Youtube,
+	Guitar,
+	FileCode2,
 	Bot,
 	type LucideIcon,
 } from "lucide-react";
@@ -66,6 +68,18 @@ export const apps: App[] = [
 		name: "YT Sidekick",
 		description: "Your YouTube Assistant",
 		icon: Youtube,
+	},
+	{
+		id: "post",
+		name: "Code Snippets",
+		description: "Your Code Snippet Creator",
+		icon: FileCode2,
+	},
+	{
+		id: "post",
+		name: "Social Post Creator",
+		description: "Your Social Post Creator",
+		icon: Guitar,
 	},
 	{
 		id: "freestyle",
