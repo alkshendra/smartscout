@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Loader2 } from 'lucide-react';
 
 // import ReactMarkdown from 'react-markdown';
@@ -9,11 +9,28 @@ import { usePageInfo } from '../../hooks/usePageInfo';
 import { LinkList } from '../shared/LinkList';
 // import { categorizeLink, extractLinks } from '../../utils/linkExtractor';
 import { useLinkExtractor } from '../../hooks/useLinkExtractor';
+import { Modal } from '../ui/Modal/Modal';
 
 export function LinkExtractor() {
 	const pageInfo = usePageInfo();
-	console.log('🚀 ~ LinkExtractor ~ pageInfo:', pageInfo);
 	const { links, loading, error, rescan } = useLinkExtractor();
+
+	const [isOpen, setIsOpen] = useState(false);
+	const [modalVariant, setModalVariant] = useState<'default' | 'alert' | 'success' | 'warning'>(
+		'default',
+	);
+
+	const openModal = (variant: 'default' | 'alert' | 'success' | 'warning') => {
+		setModalVariant(variant);
+		setIsOpen(true);
+	};
+
+	useEffect(() => {
+		if (error) {
+			openModal('alert');
+		}
+	}, [error]);
+
 	// const [links, setLinks] = useState<Array<LinkMetadata>>([]);
 	// const [loading, setLoading] = useState(false);
 	// const [error, setError] = useState<string | null>(null);
@@ -57,12 +74,30 @@ export function LinkExtractor() {
 			>
 				{loading ? 'Extracting...' : 'Extract Links'}
 			</button>
+
+			<Modal isOpen={isOpen} onClose={() => setIsOpen(false)} variant={modalVariant}>
+				<Modal.Header>
+					<h2 className="text-xl font-semibold text-gray-900 pl-8">Oops 😮‍💨</h2>
+				</Modal.Header>
+				<Modal.Content>
+					<p className="text-gray-60" dangerouslySetInnerHTML={{ __html: error }}>
+						{/* {error || 'Something went wrong. Please try again later.'} */}
+					</p>
+				</Modal.Content>
+				<Modal.Footer>
+					<button
+						onClick={() => setIsOpen(false)}
+						className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300"
+					>
+						Sad 😪
+					</button>
+				</Modal.Footer>
+			</Modal>
+
 			{loading ? (
 				<div className="flex items-center justify-center my-8">
 					<Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
 				</div>
-			) : error ? (
-				<div className="text-center text-red-500 mt-8">{error}</div>
 			) : links.length > 0 ? (
 				<LinkList links={links} />
 			) : (
