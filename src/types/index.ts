@@ -6,3 +6,11 @@ export interface ThemeColor {
 	surfaceVariant: string;
 	onSurface: string;
 }
+
+export interface LinkMetadata {
+	url: string;
+	title: string;
+	description?: string;
+	thumbnail?: string;
+	category: string;
+}
