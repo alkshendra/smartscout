@@ -14,6 +14,10 @@ export const useLinkExtractor = () => {
 
 	const scanPage = async () => {
 		try {
+			if (!pageInfo?.htmlContent) {
+				setError('No page content found');
+				return;
+			}
 			setLoading(true);
 			// const html = await getCurrentPageHTML();
 			const html = pageInfo?.htmlContent || '';
@@ -58,9 +62,7 @@ export const useLinkExtractor = () => {
 	};
 
 	useEffect(() => {
-		if (pageInfo?.htmlContent) {
-			scanPage();
-		}
+		scanPage();
 	}, [pageInfo?.htmlContent]);
 
 	return { links, loading, error, rescan: scanPage };
