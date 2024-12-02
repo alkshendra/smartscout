@@ -6,9 +6,9 @@ export interface StreamCallbacks {
 
 export async function aiPrompt(
 	prompt: string,
-	content: string,
+	content: string | object | boolean,
 	callbacks?: StreamCallbacks,
-	prePrompt?: string
+	prePrompt?: string,
 ): Promise<string> {
 	const systemPrompt =
 		prePrompt ||
@@ -20,7 +20,7 @@ Here's the page Content: ${content}`;
 		const session = await ai.languageModel.create({ systemPrompt });
 		const stream = await session.promptStreaming(prompt);
 
-		let fullText = "";
+		let fullText = '';
 
 		for await (const chunk of stream) {
 			fullText += chunk;
@@ -37,10 +37,7 @@ Here's the page Content: ${content}`;
 
 		return fullText;
 	} catch (error) {
-		const err =
-			error instanceof Error
-				? error
-				: new Error("Unknown error occurred");
+		const err = error instanceof Error ? error : new Error('Unknown error occurred');
 		if (callbacks?.onError) {
 			callbacks.onError(err);
 		}

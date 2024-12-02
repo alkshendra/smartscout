@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { Sidesheet } from "./components/Layout/Sidesheet";
-import { AppGrid } from "./components/Apps/AppGrid";
-import { Calculator } from "./components/Apps/Calculator";
-import { Translator } from "./components/Apps/Translator";
-import { WritingAssistant } from "./components/Apps/WritingAssistant";
-import { Summarizer } from "./components/Apps/Summarizer";
-import { LinkExtractor } from "./components/Apps/LinkExtractor";
-import { Freestyle } from "./components/Apps/Freestyle";
-import { ThemeProvider } from "./context/ThemeContext";
-import { ThemePicker } from "./components/ThemePicker";
-import { apps } from "./data/apps";
+import React, { useState } from 'react';
+import { Sidesheet } from './components/Layout/Sidesheet';
+import { AppGrid } from './components/Apps/AppGrid';
+import { Calculator } from './components/Apps/Calculator';
+import { Translator } from './components/Apps/Translator';
+import { WritingAssistant } from './components/Apps/WritingAssistant';
+import { Summarizer } from './components/Apps/Summarizer';
+import { LinkExtractor } from './components/Apps/LinkExtractor';
+import { Freestyle } from './components/Apps/Freestyle';
+import { ThemeProvider } from './context/ThemeContext';
+import { ThemePicker } from './components/ThemePicker';
+import { apps } from './data/apps';
 
 interface AppState {
 	id: string | null;
@@ -18,6 +18,7 @@ interface AppState {
 
 export default function App() {
 	const [currentApp, setCurrentApp] = useState<AppState>({ id: null });
+	console.log('🚀 ~ App ~ currentApp:', currentApp);
 
 	const handleAppClick = (appId: string, options?: Record<string, any>) => {
 		setCurrentApp({ id: appId, options });
@@ -28,29 +29,25 @@ export default function App() {
 	};
 
 	const handleClose = () => {
-		window.parent.postMessage({ action: "toggle_sidebar" }, "*");
+		window.parent.postMessage({ action: 'toggle_sidebar' }, '*');
 	};
 
 	const getCurrentAppTitle = () =>
-		currentApp.id
-			? apps.find((app) => app.id === currentApp.id)?.name || ""
-			: "";
+		currentApp.id ? apps.find(app => app.id === currentApp.id)?.name || '' : '';
 
 	const renderContent = () => {
 		switch (currentApp.id) {
-			case "calculator":
+			case 'calculator':
 				return <Calculator />;
-			case "translator":
+			case 'translator':
 				return <Translator />;
-			case "writingAssistant":
+			case 'writingAssistant':
 				return <WritingAssistant />;
-			case "summarizer":
-				return (
-					<Summarizer initialTab={currentApp.options?.initialTab} />
-				);
-			case "links":
+			case 'summarizer':
+				return <Summarizer initialTab={currentApp.options?.initialTab} />;
+			case 'links':
 				return <LinkExtractor />;
-			case "freestyle":
+			case 'freestyle':
 				return <Freestyle />;
 			default:
 				return <AppGrid onAppClick={handleAppClick} />;
