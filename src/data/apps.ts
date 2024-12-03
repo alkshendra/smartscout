@@ -71,12 +71,6 @@ export const apps: App[] = [
 	},
 	{
 		id: 'post',
-		name: 'Code Snippets',
-		description: 'Your Code Snippet Creator',
-		icon: FileCode2,
-	},
-	{
-		id: 'post',
 		name: 'Social Post Creator',
 		description: 'Your Social Post Creator',
 		icon: Guitar,
