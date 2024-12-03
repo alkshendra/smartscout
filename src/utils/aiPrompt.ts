@@ -4,17 +4,26 @@ export interface StreamCallbacks {
 	onError?: (error: Error) => void;
 }
 
-export async function aiPrompt(
-	prompt: string,
-	content: string | object | boolean,
-	callbacks?: StreamCallbacks,
-	prePrompt?: string,
-): Promise<string> {
+interface PromptParams {
+	systemPrompt?: string;
+	prompt: string;
+	content?: string | object | boolean;
+	callbacks?: StreamCallbacks;
+	stream?: boolean;
+}
+
+export async function aiPrompt({
+	systemPrompt: _systemPrompt,
+	prompt,
+	content = '',
+	callbacks,
+	stream = true,
+}: PromptParams): Promise<string> {
 	const systemPrompt =
-		prePrompt ||
+		_systemPrompt ||
 		`Always reply in English. Don't try to output any other language. 
 Take the following page content into consideration and output in markdown format. 
-Here's the page Content: ${content}`;
+${content ? `Here's the page Content: ${content}` : ''}`;
 
 	try {
 		if (!self.ai || !self.ai.languageModel) {
@@ -23,16 +32,24 @@ Here's the page Content: ${content}`;
 			);
 		}
 		const session = await ai.languageModel.create({ systemPrompt });
-		const stream = await session.promptStreaming(prompt);
 
 		let fullText = '';
 
-		for await (const chunk of stream) {
-			fullText += chunk;
+		if (stream) {
+			const promptStream = await session.promptStreaming(prompt);
+			for await (const chunk of promptStream) {
+				fullText += chunk;
 
+				if (callbacks?.onChunk) {
+					console.log(chunk);
+					callbacks.onChunk(chunk);
+				}
+			}
+		} else {
+			const content = await session.prompt(prompt);
 			if (callbacks?.onChunk) {
-				console.log(chunk);
-				callbacks.onChunk(chunk);
+				callbacks.onChunk(content);
+				fullText = content;
 			}
 		}
 
