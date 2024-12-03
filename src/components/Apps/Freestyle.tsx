@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Bot, Trash2 } from "lucide-react";
-import { ChatMessage } from "../shared/ChatMessage";
-import { aiPrompt } from "../../utils/aiPrompt";
+import React, { useState, useRef, useEffect } from 'react';
+import { Bot, Trash2 } from 'lucide-react';
+import { ChatMessage } from '../shared/ChatMessage';
+import { aiPrompt } from '../../utils/aiPrompt';
 
 interface Message {
 	content: string;
@@ -10,12 +10,12 @@ interface Message {
 
 export function Freestyle() {
 	const [messages, setMessages] = useState<Message[]>([]);
-	const [input, setInput] = useState("");
+	const [input, setInput] = useState('');
 	const [loading, setLoading] = useState(false);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 
 	const scrollToBottom = () => {
-		messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+		messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
 	};
 
 	useEffect(() => {
@@ -27,39 +27,41 @@ export function Freestyle() {
 		if (!input.trim() || loading) return;
 
 		const userMessage = { content: input, isUser: true };
-		setMessages((prev) => [...prev, userMessage]);
-		setInput("");
+		setMessages(prev => [...prev, userMessage]);
+		setInput('');
 		setLoading(true);
 
-		let aiResponse = "";
+		let aiResponse = '';
 		try {
-			await aiPrompt(input, "", {
-				onChunk: (chunk) => {
-					aiResponse += chunk;
-					setMessages((prev) => {
-						const newMessages = [...prev];
-						const lastMessage = newMessages[newMessages.length - 1];
-						if (!lastMessage.isUser) {
-							lastMessage.content = aiResponse;
-						} else {
-							newMessages.push({
-								content: aiResponse,
+			await aiPrompt({
+				prompt: input,
+				callbacks: {
+					onChunk: chunk => {
+						aiResponse = chunk;
+						setMessages(prev => {
+							const newMessages = [...prev];
+							const lastMessage = newMessages[newMessages.length - 1];
+							if (!lastMessage.isUser) {
+								lastMessage.content = aiResponse;
+							} else {
+								newMessages.push({
+									content: aiResponse,
+									isUser: false,
+								});
+							}
+							return newMessages;
+						});
+					},
+					onError: error => {
+						console.error('Chat error:', error);
+						setMessages(prev => [
+							...prev,
+							{
+								content: 'Sorry, I encountered an error. Please try again.',
 								isUser: false,
-							});
-						}
-						return newMessages;
-					});
-				},
-				onError: (error) => {
-					console.error("Chat error:", error);
-					setMessages((prev) => [
-						...prev,
-						{
-							content:
-								"Sorry, I encountered an error. Please try again.",
-							isUser: false,
-						},
-					]);
+							},
+						]);
+					},
 				},
 			});
 		} finally {
@@ -69,7 +71,7 @@ export function Freestyle() {
 
 	const handleClear = () => {
 		setMessages([]);
-		setInput("");
+		setInput('');
 	};
 
 	return (
@@ -92,16 +94,11 @@ export function Freestyle() {
 				{messages.length === 0 ? (
 					<div className="h-full flex items-center justify-center text-center p-8">
 						<div className="max-w-sm">
-							<Bot
-								size={48}
-								className="mx-auto mb-4 text-primary opacity-50"
-							/>
-							<h3 className="text-lg font-medium mb-2">
-								Welcome to Freestyle Chat!
-							</h3>
+							<Bot size={48} className="mx-auto mb-4 text-primary opacity-50" />
+							<h3 className="text-lg font-medium mb-2">Welcome to Freestyle Chat!</h3>
 							<p className="text-sm text-gray-600">
-								Ask me anything! I'm here to help with writing,
-								analysis, coding, or any other topic.
+								Ask me anything! I'm here to help with writing, analysis, coding, or
+								any other topic.
 							</p>
 						</div>
 					</div>
@@ -117,15 +114,12 @@ export function Freestyle() {
 				<div ref={messagesEndRef} />
 			</div>
 
-			<form
-				onSubmit={handleSubmit}
-				className="p-4 border-t border-surface-variant"
-			>
+			<form onSubmit={handleSubmit} className="p-4 border-t border-surface-variant">
 				<div className="flex gap-2">
 					<input
 						type="text"
 						value={input}
-						onChange={(e) => setInput(e.target.value)}
+						onChange={e => setInput(e.target.value)}
 						placeholder="Type your message..."
 						className="flex-1 rounded-lg border border-surface-variant bg-white px-4 py-2 text-sm focus:border-primary focus:outline-none"
 						disabled={loading}
@@ -135,7 +129,7 @@ export function Freestyle() {
 						disabled={loading || !input.trim()}
 						className="px-4 py-2 rounded-lg bg-primary text-white hover:opacity-90 disabled:opacity-50 transition-opacity"
 					>
-						{loading ? "Sending..." : "Send"}
+						{loading ? 'Sending...' : 'Send'}
 					</button>
 				</div>
 			</form>
