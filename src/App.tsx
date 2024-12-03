@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Sidesheet } from './components/Layout/Sidesheet';
 import { AppGrid } from './components/Apps/AppGrid';
 // import { Calculator } from "./components/Apps/Calculator";
@@ -13,6 +13,7 @@ import { apps } from './data/apps';
 import { TOC } from './components/Apps/TOC';
 import { usePageInsights } from './hooks/usePageInsights';
 import { SEO } from './components/Apps/SEO/SEO';
+import { Post } from './components/Apps/Post/Post';
 
 interface AppState {
 	id: string | null;
@@ -58,6 +59,8 @@ export default function App() {
 				return <TOC />;
 			case 'seo':
 				return <SEO />;
+			case 'post':
+				return <Post />;
 			default:
 				return <AppGrid onAppClick={handleAppClick} insights={insights} />;
 		}
