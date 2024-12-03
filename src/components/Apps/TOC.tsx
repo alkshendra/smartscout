@@ -4,12 +4,11 @@ import { usePageInfo } from "../../hooks/usePageInfo";
 import ReactMarkdown from 'react-markdown';
 
 export function TOC() {
-  const { toc } = useTOC();
+  const { toc, error } = useTOC();
   const pageInfo = usePageInfo();
   const [headings, setHeadings] = useState<any[]>([]);
 
   const handleClick = (heading: any) => {
-    console.log('coming here');
     window.parent.postMessage({ action: "redirect", url: `#${heading.id}` }, "*");
   }
 
@@ -27,7 +26,6 @@ export function TOC() {
       }
     })
     setHeadings(filteredHeadings);
-    console.log(filteredHeadings)
   }, [pageInfo?.htmlContent])
 
   return <>
@@ -46,6 +44,11 @@ export function TOC() {
       <h2>Smart TOC</h2>
       <div>
         <ReactMarkdown>{toc}</ReactMarkdown>
+        {error && (
+          <div className="rounded-lg bg-red-100 p-4 text-red-700">
+            {error}
+          </div>
+        )}
       </div>
     </>}
   </>

@@ -35,14 +35,13 @@ export function useTOC() {
 
       for await (const chunk of stream) {
         fullResponse = chunk.trim();
-        console.log(chunk)
         setToc(fullResponse);
       }
     } catch (error) {
       const errorMessage =
         error instanceof Error
           ? error.message
-          : "Summarization failed. Please try again.";
+          : "Generating Smart TOC failed. Please try again.";
       setError(errorMessage);
     } finally {
       setIsFetchingTOC(false);
