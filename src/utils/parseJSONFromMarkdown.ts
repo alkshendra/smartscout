@@ -1,23 +1,22 @@
 /**
- * Extracts and parses JSON objects from Markdown text.
+ * Extracts and parses JSON object from Markdown text.
  *
  * @param {string} markdown - The Markdown content.
- * @returns {Object[]} - An array of parsed JSON objects. Throws an error if JSON parsing fails.
+ * @returns {Object|null} - The parsed JSON object, or null if no JSON block is found.
  */
 export function parseJSONFromMarkdown(markdown) {
-	const jsonBlocks = [];
-	const jsonRegex = /```json([\s\S]*?)```/g;
-	let match;
+	const jsonRegex = /```json([\s\S]*?)```/;
+	const match = jsonRegex.exec(markdown);
 
-	while ((match = jsonRegex.exec(markdown)) !== null) {
+	if (match) {
 		try {
 			const jsonString = match[1].trim();
-			jsonBlocks.push(JSON.parse(jsonString));
+			return JSON.parse(jsonString);
 		} catch (error) {
 			console.error(`Error parsing JSON block: ${error.message}`);
 			throw new Error('Invalid JSON in Markdown');
 		}
 	}
 
-	return jsonBlocks;
+	return null; // Return null if no JSON block is found
 }

@@ -3,14 +3,11 @@ import { Loader2 } from 'lucide-react';
 
 // import ReactMarkdown from 'react-markdown';
 
-import { usePageInfo } from '../../hooks/usePageInfo';
-// import { aiPrompt } from '../../utils/aiPrompt';
-// import { LinkMetadata } from '../../types';
-import { LinkList } from '../shared/LinkList';
-// import { categorizeLink, extractLinks } from '../../utils/linkExtractor';
-import { useLinkExtractor } from '../../hooks/useLinkExtractor';
 import { Modal } from '../ui/Modal/Modal';
+import { LinkList } from '../shared/LinkList';
 import { ModalVariant } from '../ui/Modal/types';
+import { usePageInfo } from '../../hooks/usePageInfo';
+import { useLinkExtractor } from '../../hooks/useLinkExtractor';
 
 export function LinkExtractor() {
 	const pageInfo = usePageInfo();
@@ -28,40 +25,6 @@ export function LinkExtractor() {
 			openModal('alert');
 		}
 	}, [error, loading]);
-
-	// const [links, setLinks] = useState<Array<LinkMetadata>>([]);
-	// const [loading, setLoading] = useState(false);
-	// const [error, setError] = useState<string | null>(null);
-	// console.log('🚀 ~ LinkExtractor ~ links:', links);
-
-	// const handleExtract = async () => {
-	// 	if (!pageInfo?.htmlContent || loading) return;
-
-	// 	setLoading(true);
-	// 	setLinks([]);
-
-	// try {
-	// 	await aiPrompt(
-	// 		'Go through the page content thoroughly extract all the links along with their titles, then categorize and list it down as markdown' +
-	// 			pageInfo.htmlContent,
-	// 		'',
-	// 		{
-	// 			onChunk: chunk => {
-	// 				console.log('🚀 ~ handleExtract ~ chunk:', chunk);
-	// 				// setLinks(prev => prev + chunk);
-	// 				// setLinks(prev => [...prev, chunk]);
-	// 			},
-	// 			onError: error => {
-	// 				console.error('Failed to extract links:', error);
-	// 				// setLinks('Failed to extract links. Please try again.');
-	// 				setError(error.message);
-	// 			},
-	// 		},
-	// 	);
-	// } finally {
-	// 	setLoading(false);
-	// }
-	// };
 
 	return (
 		<div className="space-y-4">
