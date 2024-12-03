@@ -4,6 +4,7 @@ interface PageInfo {
 	title: string;
 	url: string;
 	content: string;
+	htmlContent: string;
 }
 
 export function usePageInfo() {

@@ -10,6 +10,7 @@ import { Freestyle } from "./components/Apps/Freestyle";
 import { ThemeProvider } from "./context/ThemeContext";
 import { ThemePicker } from "./components/ThemePicker";
 import { apps } from "./data/apps";
+import { TOC } from "./components/Apps/TOC";
 
 interface AppState {
 	id: string | null;
@@ -18,6 +19,8 @@ interface AppState {
 
 export default function App() {
 	const [currentApp, setCurrentApp] = useState<AppState>({ id: null });
+
+	console.log(currentApp)
 
 	const handleAppClick = (appId: string, options?: Record<string, any>) => {
 		setCurrentApp({ id: appId, options });
@@ -52,6 +55,8 @@ export default function App() {
 				return <LinkExtractor />;
 			case "freestyle":
 				return <Freestyle />;
+			case "toc":
+				return <TOC />;
 			default:
 				return <AppGrid onAppClick={handleAppClick} />;
 		}
