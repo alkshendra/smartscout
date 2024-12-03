@@ -11,6 +11,7 @@ import { ThemeProvider } from "./context/ThemeContext";
 import { ThemePicker } from "./components/ThemePicker";
 import { apps } from "./data/apps";
 import { TOC } from "./components/Apps/TOC";
+import { usePageInsights } from "./hooks/usePageInsights";
 
 interface AppState {
 	id: string | null;
@@ -20,7 +21,7 @@ interface AppState {
 export default function App() {
 	const [currentApp, setCurrentApp] = useState<AppState>({ id: null });
 
-	console.log(currentApp)
+	const { insights } = usePageInsights();
 
 	const handleAppClick = (appId: string, options?: Record<string, any>) => {
 		setCurrentApp({ id: appId, options });
@@ -58,7 +59,7 @@ export default function App() {
 			case "toc":
 				return <TOC />;
 			default:
-				return <AppGrid onAppClick={handleAppClick} />;
+				return <AppGrid onAppClick={handleAppClick} insights={insights} />;
 		}
 	};
 
