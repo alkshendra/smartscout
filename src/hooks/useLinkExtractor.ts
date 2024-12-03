@@ -3,7 +3,7 @@ import { LinkMetadata } from '../types';
 import { extractLinks, categorizeLink, extractMetadata } from '../utils/linkExtractor';
 // import { getCurrentPageHTML } from '../utils/pageScanner';
 import { usePageInfo } from './usePageInfo';
-import { aiPrompt } from '../utils/aiPrompt';
+// import { aiPrompt } from '../utils/aiPrompt';
 
 export const useLinkExtractor = () => {
 	const pageInfo = usePageInfo();
@@ -69,7 +69,9 @@ export const useLinkExtractor = () => {
 	};
 
 	useEffect(() => {
-		scanPage();
+		if (pageInfo?.htmlContent) {
+			scanPage();
+		}
 	}, [pageInfo?.htmlContent]);
 
 	return { links, loading, error, rescan: scanPage };
