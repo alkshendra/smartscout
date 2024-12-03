@@ -20,6 +20,7 @@ interface AppState {
 
 export default function App() {
 	const [currentApp, setCurrentApp] = useState<AppState>({ id: null });
+	console.log('🚀 ~ App ~ currentApp:', currentApp);
 
 	const { insights } = usePageInsights();
 
@@ -32,29 +33,25 @@ export default function App() {
 	};
 
 	const handleClose = () => {
-		window.parent.postMessage({ action: "toggle_sidebar" }, "*");
+		window.parent.postMessage({ action: 'toggle_sidebar' }, '*');
 	};
 
 	const getCurrentAppTitle = () =>
-		currentApp.id
-			? apps.find((app) => app.id === currentApp.id)?.name || ""
-			: "";
+		currentApp.id ? apps.find(app => app.id === currentApp.id)?.name || '' : '';
 
 	const renderContent = () => {
 		switch (currentApp.id) {
-			case "calculator":
+			case 'calculator':
 				return <Calculator />;
-			case "translator":
+			case 'translator':
 				return <Translator />;
-			case "writingAssistant":
+			case 'writingAssistant':
 				return <WritingAssistant />;
-			case "summarizer":
-				return (
-					<Summarizer initialTab={currentApp.options?.initialTab} />
-				);
-			case "links":
+			case 'summarizer':
+				return <Summarizer initialTab={currentApp.options?.initialTab} />;
+			case 'links':
 				return <LinkExtractor />;
-			case "freestyle":
+			case 'freestyle':
 				return <Freestyle />;
 			case "toc":
 				return <TOC />;

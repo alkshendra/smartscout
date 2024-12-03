@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 interface PageInfo {
 	title: string;
@@ -12,18 +12,18 @@ export function usePageInfo() {
 
 	useEffect(() => {
 		function handleMessage(event: MessageEvent) {
-			console.log(event.data.action);
-			if (event.data.action === "pageInfo") {
+			// console.log(event.data.action);
+			if (event.data.action === 'pageInfo') {
 				setPageInfo(event.data.data);
 			}
 		}
 
-		window.addEventListener("message", handleMessage);
+		window.addEventListener('message', handleMessage);
 
 		// Request page info from the content script
-		window.parent.postMessage({ action: "getPageInfo" }, "*");
+		window.parent.postMessage({ action: 'getPageInfo' }, '*');
 
-		return () => window.removeEventListener("message", handleMessage);
+		return () => window.removeEventListener('message', handleMessage);
 	}, []);
 
 	return pageInfo;

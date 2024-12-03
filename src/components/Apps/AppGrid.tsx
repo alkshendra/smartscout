@@ -1,5 +1,5 @@
 import React from "react";
-import { FileText, ArrowRight } from "lucide-react";
+import { FileText, ArrowRight } from 'lucide-react';
 import { cn } from "../../utils/cn";
 import { apps } from "../../data/apps";
 import ReactMarkdown from 'react-markdown';
@@ -21,15 +21,13 @@ export function AppGrid({ onAppClick, insights }: AppGridProps) {
 			</div>
 			<button
 				key="summarizer"
-				onClick={() =>
-					onAppClick("summarizer", { initialTab: "summarize" })
-				}
+				onClick={() => onAppClick('summarizer', { initialTab: 'summarize' })}
 				className="flex flex-row items-center rounded-full w-full p-1 mb-8 bg-white transition-transform hover:scale-[1.01]"
 				title="Summarize"
 			>
 				<div
 					className={cn(
-						"h-10 w-10 mr-2 flex items-center justify-center p-2 rounded-full bg-primary text-white"
+						'h-10 w-10 mr-2 flex items-center justify-center p-2 rounded-full bg-primary text-white',
 					)}
 				>
 					<FileText size={20} />
@@ -47,19 +45,17 @@ export function AppGrid({ onAppClick, insights }: AppGridProps) {
 					>
 						<div
 							className={cn(
-								"h-16 w-16 mb-2 flex items-center justify-center p-2 rounded-3xl",
+								'h-16 w-16 mb-2 flex items-center justify-center p-2 rounded-3xl',
 								index % 2
-									? "bg-surface-variant text-primary"
-									: "bg-primary text-white"
+									? 'bg-surface-variant text-primary'
+									: 'bg-primary text-white',
 							)}
 						>
 							{React.createElement(app.icon, {
 								size: 24,
 							})}
 						</div>
-						<span className="text-sm font-medium text-center">
-							{app.name}
-						</span>
+						<span className="text-sm font-medium text-center">{app.name}</span>
 					</button>
 				))}
 			</div>
