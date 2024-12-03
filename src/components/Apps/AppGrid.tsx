@@ -1,29 +1,23 @@
-import React from 'react';
-import { FileText, ArrowRight, type LucideIcon } from 'lucide-react';
-import { cn } from '../../utils/cn';
-import { apps } from '../../data/apps';
+import React from "react";
+import { FileText, ArrowRight } from 'lucide-react';
+import { cn } from "../../utils/cn";
+import { apps } from "../../data/apps";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm'
 
 interface AppGridProps {
 	onAppClick: (appId: string, options?: Record<string, any>) => void;
+	insights: string | null;
 }
 
-export function AppGrid({ onAppClick }: AppGridProps) {
+export function AppGrid({ onAppClick, insights }: AppGridProps) {
+
 	return (
 		<div>
 			<div className="p-4 mb-8 bg-surface-variant rounded-xl">
-				<p className="text-sm font-medium">Page Insights</p>
-				<div className="flex align-center justify-between">
-					<span>Reading Time</span>
-					<span>2 min</span>
-				</div>
-				<div className="flex align-center justify-between">
-					<span>Sentiment</span>
-					<span>Bohat hard</span>
-				</div>
-				<div className="flex align-center justify-between">
-					<span>Content Language</span>
-					<span>English</span>
-				</div>
+				{insights && <>
+					<ReactMarkdown remarkPlugins={[remarkGfm]}>{insights}</ReactMarkdown>
+				</>}
 			</div>
 			<button
 				key="summarizer"

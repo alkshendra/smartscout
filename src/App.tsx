@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
-import { Sidesheet } from './components/Layout/Sidesheet';
-import { AppGrid } from './components/Apps/AppGrid';
-import { Calculator } from './components/Apps/Calculator';
-import { Translator } from './components/Apps/Translator';
-import { WritingAssistant } from './components/Apps/WritingAssistant';
-import { Summarizer } from './components/Apps/Summarizer';
-import { LinkExtractor } from './components/Apps/LinkExtractor';
-import { Freestyle } from './components/Apps/Freestyle';
-import { ThemeProvider } from './context/ThemeContext';
-import { ThemePicker } from './components/ThemePicker';
-import { apps } from './data/apps';
+import React, { useState } from "react";
+import { Sidesheet } from "./components/Layout/Sidesheet";
+import { AppGrid } from "./components/Apps/AppGrid";
+import { Calculator } from "./components/Apps/Calculator";
+import { Translator } from "./components/Apps/Translator";
+import { WritingAssistant } from "./components/Apps/WritingAssistant";
+import { Summarizer } from "./components/Apps/Summarizer";
+import { LinkExtractor } from "./components/Apps/LinkExtractor";
+import { Freestyle } from "./components/Apps/Freestyle";
+import { ThemeProvider } from "./context/ThemeContext";
+import { ThemePicker } from "./components/ThemePicker";
+import { apps } from "./data/apps";
+import { TOC } from "./components/Apps/TOC";
+import { usePageInsights } from "./hooks/usePageInsights";
 
 interface AppState {
 	id: string | null;
@@ -19,6 +21,8 @@ interface AppState {
 export default function App() {
 	const [currentApp, setCurrentApp] = useState<AppState>({ id: null });
 	console.log('🚀 ~ App ~ currentApp:', currentApp);
+
+	const { insights } = usePageInsights();
 
 	const handleAppClick = (appId: string, options?: Record<string, any>) => {
 		setCurrentApp({ id: appId, options });
@@ -49,8 +53,10 @@ export default function App() {
 				return <LinkExtractor />;
 			case 'freestyle':
 				return <Freestyle />;
+			case "toc":
+				return <TOC />;
 			default:
-				return <AppGrid onAppClick={handleAppClick} />;
+				return <AppGrid onAppClick={handleAppClick} insights={insights} />;
 		}
 	};
 
