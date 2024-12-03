@@ -10,26 +10,24 @@ import { LinkList } from '../shared/LinkList';
 // import { categorizeLink, extractLinks } from '../../utils/linkExtractor';
 import { useLinkExtractor } from '../../hooks/useLinkExtractor';
 import { Modal } from '../ui/Modal/Modal';
+import { ModalVariant } from '../ui/Modal/types';
 
 export function LinkExtractor() {
 	const pageInfo = usePageInfo();
 	const { links, loading, error, rescan } = useLinkExtractor();
-
 	const [isOpen, setIsOpen] = useState(false);
-	const [modalVariant, setModalVariant] = useState<'default' | 'alert' | 'success' | 'warning'>(
-		'default',
-	);
+	const [modalVariant, setModalVariant] = useState<ModalVariant>('default');
 
-	const openModal = (variant: 'default' | 'alert' | 'success' | 'warning') => {
+	const openModal = (variant: ModalVariant) => {
 		setModalVariant(variant);
 		setIsOpen(true);
 	};
 
 	useEffect(() => {
-		if (error) {
+		if (error && !loading) {
 			openModal('alert');
 		}
-	}, [error]);
+	}, [error, loading]);
 
 	// const [links, setLinks] = useState<Array<LinkMetadata>>([]);
 	// const [loading, setLoading] = useState(false);
