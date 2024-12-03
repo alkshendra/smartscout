@@ -12,10 +12,11 @@ import { ThemePicker } from './components/ThemePicker';
 import { apps } from './data/apps';
 import { TOC } from './components/Apps/TOC';
 import { usePageInsights } from './hooks/usePageInsights';
+import { SEO } from './components/Apps/SEO/SEO';
 
 interface AppState {
 	id: string | null;
-	options?: Record<string, any>;
+	options?: Record<string, undefined>;
 }
 
 export default function App() {
@@ -55,6 +56,8 @@ export default function App() {
 				return <Freestyle />;
 			case 'toc':
 				return <TOC />;
+			case 'seo':
+				return <SEO />;
 			default:
 				return <AppGrid onAppClick={handleAppClick} insights={insights} />;
 		}

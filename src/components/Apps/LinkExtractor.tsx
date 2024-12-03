@@ -78,9 +78,7 @@ export function LinkExtractor() {
 					<h2 className="text-xl font-semibold text-gray-900 pl-8">Oops 😮‍💨</h2>
 				</Modal.Header>
 				<Modal.Content>
-					<p className="text-gray-60" dangerouslySetInnerHTML={{ __html: error }}>
-						{/* {error || 'Something went wrong. Please try again later.'} */}
-					</p>
+					<p className="text-gray-60" dangerouslySetInnerHTML={{ __html: error }} />
 				</Modal.Content>
 				<Modal.Footer>
 					<button

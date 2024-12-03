@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 import { FileText, ArrowRight } from 'lucide-react';
-import { cn } from "../../utils/cn";
-import { apps } from "../../data/apps";
+import { cn } from '../../utils/cn';
+import { apps } from '../../data/apps';
 import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm'
+import remarkGfm from 'remark-gfm';
 
 interface AppGridProps {
 	onAppClick: (appId: string, options?: Record<string, any>) => void;
@@ -11,13 +11,10 @@ interface AppGridProps {
 }
 
 export function AppGrid({ onAppClick, insights }: AppGridProps) {
-
 	return (
 		<div>
 			<div className="p-4 mb-8 bg-surface-variant rounded-xl">
-				{insights && <>
-					<ReactMarkdown remarkPlugins={[remarkGfm]}>{insights}</ReactMarkdown>
-				</>}
+				{insights && <ReactMarkdown remarkPlugins={[remarkGfm]}>{insights}</ReactMarkdown>}
 			</div>
 			<button
 				key="summarizer"
