@@ -15,25 +15,25 @@ export const LinkPreview: React.FC<LinkPreviewProps> = ({ link }) => {
 	};
 
 	return (
-		<div className="flex items-start gap-4 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+		<div className="flex items-start gap-4 p-2 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
 			{link.thumbnail ? (
 				<img
 					src={link.thumbnail}
 					alt={link.title}
-					className="w-24 h-24 object-cover rounded-lg"
+					className="w-16 h-16 object-cover rounded-lg"
 				/>
 			) : (
-				<div className="w-24 h-24 bg-gray-100 rounded-lg flex items-center justify-center">
+				<div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
 					{getIcon()}
 				</div>
 			)}
 			<div className="flex-1 min-w-0">
-				<h3 className="font-medium text-lg text-gray-900 truncate">{link.title}</h3>
+				<h3 className="font-medium text-sm text-gray-900 truncate">{link.title}</h3>
 				{link.description && (
-					<p className="text-gray-600 text-sm mt-1 line-clamp-2">{link.description}</p>
+					<p className="text-gray-600 text-xs mt-1 line-clamp-2">{link.description}</p>
 				)}
 				<div className="flex items-center gap-2 mt-2">
-					<span className="text-sm text-gray-500 truncate">{link.url}</span>
+					<span className="text-xs text-gray-500 truncate">{link.url}</span>
 					<a
 						href={link.url}
 						target="_blank"
