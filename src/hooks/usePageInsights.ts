@@ -27,10 +27,16 @@ export function usePageInsights() {
 
     try {
       const prompter = await createPrompt(content);
-      const query = `Infer and tell get me the following information of the page: read time, sentiment and content language. Keep it short and to the point as a key value pair. Give me one word comma separated outputs. Separate by --.
+      const query = `Read the given content and get me "only the following information" as a list in the "following markdown format":
 
-      Make it look pretty and readable and keep it to the point with only the answer.
+      1. **Read time**:
       
+      1. **Sentiment**: 
+
+      1. **Language**:
+
+      Do not output any other information or text.
+
       Output in markdown format. The content is in english and always reply in english. Ignore and do not try to parse any other language`;
       const stream = await prompter.promptStreaming(query);
       let fullResponse = "";
