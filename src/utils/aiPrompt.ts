@@ -13,11 +13,11 @@ interface PromptParams {
 }
 
 export async function aiPrompt({
-	systemPrompt: _systemPrompt,
 	prompt,
-	content = '',
 	callbacks,
+	content = '',
 	stream = true,
+	systemPrompt: _systemPrompt,
 }: PromptParams): Promise<string> {
 	const systemPrompt =
 		_systemPrompt ||

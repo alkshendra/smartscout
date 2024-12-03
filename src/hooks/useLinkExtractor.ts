@@ -1,14 +1,11 @@
 import { useState, useEffect } from 'react';
 import { LinkMetadata } from '../types';
-import { extractLinks, categorizeLink, extractMetadata } from '../utils/linkExtractor';
-// import { getCurrentPageHTML } from '../utils/pageScanner';
 import { usePageInfo } from './usePageInfo';
-// import { aiPrompt } from '../utils/aiPrompt';
+import { extractLinks, categorizeLink, extractMetadata } from '../utils/linkExtractor';
 
 export const useLinkExtractor = () => {
 	const pageInfo = usePageInfo();
 	const [links, setLinks] = useState<LinkMetadata[]>([]);
-	// const [processedAILinks, setProcessedAILinks] = useState('');
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
@@ -40,24 +37,6 @@ export const useLinkExtractor = () => {
 					};
 				}),
 			);
-
-			// await aiPrompt(
-			// 	'Go through the following array of JSON object thoroughly extract all the url and their title or description, then categorize them and return',
-			// 	'```json\n' + JSON.stringify(processedLinks) + '\n```',
-			// 	{
-			// 		onChunk: chunk => {
-			// 			console.log('🚀 ~ handleExtract ~ chunk:', chunk);
-			// 			// setLinks(prev => prev + chunk);
-			// 			// setLinks(prev => [...prev, chunk]);
-			// 			setProcessedAILinks(prev => prev + chunk);
-			// 		},
-			// 		onError: error => {
-			// 			console.error('Failed to extract links:', error);
-			// 			// setLinks('Failed to extract links. Please try again.');
-			// 			// setError(error.message);
-			// 		},
-			// 	},
-			// );
 
 			setLinks(processedLinks);
 			setError(null);
