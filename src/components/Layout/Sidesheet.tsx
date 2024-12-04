@@ -1,7 +1,10 @@
 import React from 'react';
 import { X, ChevronLeft, Bot } from 'lucide-react';
+
+import { cn } from '../../utils/cn';
 import { useTime } from '../../hooks/useTime';
 import { usePageInfo } from '../../hooks/usePageInfo';
+import { useTheme } from '../../context/ThemeContext';
 
 interface SidesheetProps {
 	onClose: () => void;
@@ -14,12 +17,18 @@ interface SidesheetProps {
 export function Sidesheet({ onClose, children, showBack, onBack, title }: SidesheetProps) {
 	const time = useTime();
 	const pageInfo = usePageInfo();
+	const { currentTheme } = useTheme();
 
 	const rotate = () => {
 		// setRotate(rotate + 1);
 	};
 	return (
-		<div className="fixed right-0 top-0 flex flex-col h-screen w-[calc(100%-30px)] max-w-[500px] bg-surface-variant shadow-2xl rounded-bl-[56px] overflow-y-auto">
+		<div
+			className={cn(
+				'fixed right-0 top-0 flex flex-col h-screen w-[calc(100%-30px)] max-w-[500px] bg-surface-variant shadow-2xl rounded-bl-[56px] overflow-y-auto',
+				currentTheme?.id === 'black' ? 'darkMode' : '',
+			)}
+		>
 			<div className="flex items-center justify-between p-4 sticky top-0 bg-surface-variant">
 				<div className="flex items-center gap-4">
 					<button

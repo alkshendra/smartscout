@@ -44,11 +44,6 @@ export function Summarizer({ initialTab = 'new' }: SummarizerProps) {
 
 	return (
 		<div className="p-4">
-			<div className="mb-6 flex items-center gap-2">
-				<FileText size={24} className="text-primary" />
-				<h2 className="text-xl font-semibold">Summarizer</h2>
-			</div>
-
 			<div className="space-y-4">
 				<TabView tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
 

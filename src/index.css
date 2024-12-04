@@ -41,3 +41,12 @@ body {
 	--tw-prose-th-borders: var(--color-surface-variant);
 	--tw-prose-td-borders: var(--color-surface-variant);
 }
+
+.darkMode [class^='text-'],
+.darkMode .text-primary {
+	color: #fff !important;
+}
+.darkMode .bg-white [class^='text-'],
+.darkMode .bg-white .text-primary {
+	color: #000 !important;
+}

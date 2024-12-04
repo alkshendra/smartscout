@@ -6,6 +6,7 @@ function toggleSidebar() {
 		sidebarFrame = document.createElement('iframe');
 		sidebarFrame.id = 'handy-sidebar-iframe';
 		sidebarFrame.src = chrome.runtime.getURL('index.html');
+		sidebarFrame.setAttribute('allowtransparency', 'true');
 		document.body.appendChild(sidebarFrame);
 	} else {
 		// Toggle the visibility
