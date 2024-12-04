@@ -19,8 +19,9 @@ body {
 	background: transparent;
 }
 /* Dark mode overrides */
-.dark {
+.dark, .darkMode {
 	color-scheme: dark;
+	color: white;
 }
 
 .dark .prose {
@@ -49,4 +50,10 @@ body {
 .darkMode .bg-white [class^='text-'],
 .darkMode .bg-white .text-primary {
 	color: #000 !important;
+}
+
+.darkMode textarea,
+.darkMode input,
+.darkMode select {
+	background-color: inherit;
 }

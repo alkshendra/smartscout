@@ -13,9 +13,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 	const [currentTheme, setCurrentTheme] = useState<ThemeColor>(themeColors[0]);
 
 	useEffect(() => {
-		const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-		const handleChange = (e: MediaQueryListEvent) => {
-			const themeId = e.matches ? 'black' : 'blue';
+		const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+		const handleChange = (e?: MediaQueryListEvent) => {
+			const themeId = (e ? e.matches : mediaQuery.matches) ? "black" : "blue";
 			// Switch to corresponding theme when system preference changes
 			const newTheme = themeColors.find(theme => theme.id === themeId);
 			if (newTheme) {
@@ -23,8 +24,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 			}
 		};
 
-		mediaQuery.addEventListener('change', handleChange);
-		return () => mediaQuery.removeEventListener('change', handleChange);
+		handleChange();
+
+		mediaQuery.addEventListener("change", handleChange);
+		return () => mediaQuery.removeEventListener("change", handleChange);
 	}, []);
 
 	const setTheme = (theme: ThemeColor) => {

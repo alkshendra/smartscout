@@ -38,7 +38,7 @@ interface SummaryTypeSelectProps {
 export function SummaryTypeSelect({ value, onChange }: SummaryTypeSelectProps) {
 	return (
 		<div className="space-y-2">
-			<label className="block text-sm font-medium">Summary Type</label>
+			<label className="block text-sm font-medium text-gray-800 dark:text-gray-400">Summary Type</label>
 			<div className="grid grid-cols-2 gap-2">
 				{summaryTypes.map(type => (
 					<button
@@ -50,7 +50,7 @@ export function SummaryTypeSelect({ value, onChange }: SummaryTypeSelectProps) {
 								: 'border-surface-variant hover:border-primary/50'
 						}`}
 					>
-						<div className="font-medium text-sm">{type.label}</div>
+						<div className="font-medium text-sm text-gray-800 dark:text-gray-400">{type.label}</div>
 						<div className="text-xs text-gray-600">{type.description}</div>
 					</button>
 				))}

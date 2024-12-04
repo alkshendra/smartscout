@@ -13,7 +13,7 @@ export function ContentInput({
 }: ContentInputProps) {
 	return (
 		<div className="space-y-2">
-			<label className="block text-sm font-medium">Content</label>
+			<label className="block text-sm font-medium text-gray-800 dark:text-gray-400">Content</label>
 			<textarea
 				value={value}
 				onChange={(e) => onChange(e.target.value)}
