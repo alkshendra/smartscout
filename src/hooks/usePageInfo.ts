@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { convertHtmlToMarkdown } from '../utils/htmlMarkdown';
 
 interface PageInfo {
 	title: string;
 	url: string;
 	content: string;
 	htmlContent: string;
+	markdownContent: string;
 }
 
 export function usePageInfo() {
@@ -12,9 +14,18 @@ export function usePageInfo() {
 
 	useEffect(() => {
 		function handleMessage(event: MessageEvent) {
-			// console.log(event.data.action);
 			if (event.data.action === 'pageInfo') {
-				setPageInfo(event.data.data);
+				const { title, url, content, htmlContent, mainContent } = event.data.data;
+				const markdownContent = convertHtmlToMarkdown(mainContent || '');
+				console.log(mainContent, markdownContent);
+
+				setPageInfo({
+					title,
+					url,
+					content,
+					htmlContent,
+					markdownContent,
+				});
 			}
 		}
 

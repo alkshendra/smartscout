@@ -6,9 +6,9 @@ import {
 	ListCollapse,
 	Link,
 	SearchCheck,
-	Youtube,
+	// Youtube,
 	Guitar,
-	FileCode2,
+	// FileCode2,
 	Bot,
 	type LucideIcon,
 } from 'lucide-react';
@@ -63,12 +63,18 @@ export const apps: App[] = [
 		description: 'Analyze the content for SEO',
 		icon: SearchCheck,
 	},
-	{
-		id: 'yt',
-		name: 'YT Sidekick',
-		description: 'Your YouTube Assistant',
-		icon: Youtube,
-	},
+	// {
+	// 	id: 'yt',
+	// 	name: 'YT Sidekick',
+	// 	description: 'Your YouTube Assistant',
+	// 	icon: Youtube,
+	// },
+	// {
+	// 	id: 'post',
+	// 	name: 'Code Snippets',
+	// 	description: 'Your Code Snippet Creator',
+	// 	icon: FileCode2,
+	// },
 	{
 		id: 'post',
 		name: 'Social Post Creator',

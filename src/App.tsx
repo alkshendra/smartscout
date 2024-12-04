@@ -20,11 +20,37 @@ interface AppState {
 	options?: Record<string, undefined>;
 }
 
+const curvedSvg = (
+	<svg
+		fill="none"
+		height="100%"
+		viewBox="0 0 30 30"
+		width="100%"
+		xmlns="http://www.w3.org/2000/svg"
+		className="absolute top-0 left-0 w-[30px] h-[30px]"
+	>
+		<g clip-path="url(#clip0_208_15)">
+			<path
+				clip-rule="evenodd"
+				d="M30 0L0 0C16.5685 0 30 13.4315 30 30L30 0Z"
+				fill="var(--color-surface-variant)"
+				fill-rule="evenodd"
+			></path>
+		</g>
+		<defs>
+			<clipPath id="clip0_208_15">
+				<rect fill="white" height="30" width="30"></rect>
+			</clipPath>
+		</defs>
+	</svg>
+);
+
 export default function App() {
 	const [currentApp, setCurrentApp] = useState<AppState>({ id: null });
 	console.log('🚀 ~ App ~ currentApp:', currentApp);
 
 	const { insights } = usePageInsights();
+	console.log({ insights });
 
 	const handleAppClick = (appId: string, options?: Record<string, any>) => {
 		setCurrentApp({ id: appId, options });
@@ -68,7 +94,7 @@ export default function App() {
 
 	return (
 		<ThemeProvider>
-			<div className="h-screen bg-surface">
+			<div className="h-screen bg-transparent rounded-bl-[56px] overflow-y-auto">
 				<Sidesheet
 					onClose={handleClose}
 					showBack={currentApp.id !== null}
@@ -79,6 +105,7 @@ export default function App() {
 				</Sidesheet>
 				{currentApp.id === null && <ThemePicker />}
 			</div>
+			{curvedSvg}
 		</ThemeProvider>
 	);
 }

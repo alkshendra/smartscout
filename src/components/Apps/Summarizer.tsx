@@ -1,43 +1,42 @@
-import React, { useState, useEffect } from "react";
-import { FileText } from "lucide-react";
-import ReactMarkdown from "react-markdown";
-import { usePageInfo } from "../../hooks/usePageInfo";
-import { useSummarizer, type SummaryType } from "../../hooks/useSummarizer";
-import { TabView } from "../shared/TabView";
-import { ContentInput } from "../shared/ContentInput";
-import { SummaryTypeSelect } from "../shared/SummaryTypeSelect";
+import React, { useState, useEffect } from 'react';
+import { FileText } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import { usePageInfo } from '../../hooks/usePageInfo';
+import { useSummarizer, type SummaryType } from '../../hooks/useSummarizer';
+import { TabView } from '../shared/TabView';
+import { ContentInput } from '../shared/ContentInput';
+import { SummaryTypeSelect } from '../shared/SummaryTypeSelect';
 
 const tabs = [
-	{ id: "new", label: "New Content" },
-	{ id: "summarize", label: "Summarize Page" },
+	{ id: 'new', label: 'New Content' },
+	{ id: 'summarize', label: 'Summarize Page' },
 ];
 
 interface SummarizerProps {
 	initialTab?: string;
 }
 
-export function Summarizer({ initialTab = "new" }: SummarizerProps) {
+export function Summarizer({ initialTab = 'new' }: SummarizerProps) {
 	const pageInfo = usePageInfo();
 	const { summarize, isSummarizing, error } = useSummarizer();
 	const [activeTab, setActiveTab] = useState(initialTab);
-	const [content, setContent] = useState("");
-	const [summaryType, setSummaryType] = useState<SummaryType>("tldr");
-	const [summary, setSummary] = useState("");
+	const [content, setContent] = useState('');
+	const [summaryType, setSummaryType] = useState<SummaryType>('key-points');
+	const [summary, setSummary] = useState('');
 
 	useEffect(() => {
-		if (activeTab === "summarize" && pageInfo?.content && !summary) {
+		if (activeTab === 'summarize' && pageInfo?.content && !summary) {
 			handleSummarize();
 		}
 	}, [activeTab, pageInfo?.content]);
 
 	const handleSummarize = async () => {
-		const textToSummarize =
-			activeTab === "new" ? content : pageInfo?.content;
+		const textToSummarize = activeTab === 'new' ? content : pageInfo?.content;
 		if (!textToSummarize) return;
 
 		await summarize(textToSummarize, {
 			type: summaryType,
-			onProgress: (chunk) => {
+			onProgress: chunk => {
 				setSummary(chunk);
 			},
 		});
@@ -51,18 +50,11 @@ export function Summarizer({ initialTab = "new" }: SummarizerProps) {
 			</div>
 
 			<div className="space-y-4">
-				<TabView
-					tabs={tabs}
-					activeTab={activeTab}
-					onTabChange={setActiveTab}
-				/>
+				<TabView tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
 
-				<SummaryTypeSelect
-					value={summaryType}
-					onChange={setSummaryType}
-				/>
+				<SummaryTypeSelect value={summaryType} onChange={setSummaryType} />
 
-				{activeTab === "new" && (
+				{activeTab === 'new' && (
 					<ContentInput
 						value={content}
 						onChange={setContent}
@@ -70,21 +62,14 @@ export function Summarizer({ initialTab = "new" }: SummarizerProps) {
 					/>
 				)}
 
-				{error && (
-					<div className="rounded-lg bg-red-100 p-4 text-red-700">
-						{error}
-					</div>
-				)}
+				{error && <div className="rounded-lg bg-red-100 p-4 text-red-700">{error}</div>}
 
 				<button
 					onClick={handleSummarize}
-					disabled={
-						isSummarizing ||
-						(activeTab === "summarize" && !pageInfo?.content)
-					}
+					disabled={isSummarizing || (activeTab === 'summarize' && !pageInfo?.content)}
 					className="w-full rounded-lg bg-primary py-2 text-white hover:opacity-90 disabled:opacity-50"
 				>
-					{isSummarizing ? "Summarizing..." : "Summarize"}
+					{isSummarizing ? 'Summarizing...' : 'Summarize'}
 				</button>
 
 				{summary && (

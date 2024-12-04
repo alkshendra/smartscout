@@ -15,7 +15,9 @@ body {
 	background: transparent;
 	color: var(--color-on-surface);
 }
-
+#root {
+	background: transparent;
+}
 /* Dark mode overrides */
 .dark {
 	color-scheme: dark;

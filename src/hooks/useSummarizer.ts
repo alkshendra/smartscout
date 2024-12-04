@@ -1,6 +1,6 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback } from 'react';
 
-export type SummaryType = "key-points" | "tldr" | "teaser" | "headline";
+export type SummaryType = 'key-points' | 'tl;dr' | 'teaser' | 'headline';
 
 interface SummarizerOptions {
 	type?: SummaryType;
@@ -12,13 +12,13 @@ export function useSummarizer() {
 	const [isSummarizing, setIsSummarizing] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
-	const createSummarizer = useCallback(async (type: SummaryType = "tldr") => {
-		if (!("ai" in window) || !("summarizer" in (window as any).ai)) {
-			throw new Error("AI Summarizer API not supported in this browser");
+	const createSummarizer = useCallback(async (type: SummaryType = 'tl;dr') => {
+		if (!('ai' in window) || !('summarizer' in (window as any).ai)) {
+			throw new Error('AI Summarizer API not supported in this browser');
 		}
 
 		return await (window as any).ai.summarizer.create({
-			format: "markdown",
+			format: 'markdown',
 			type: type,
 		});
 	}, []);
@@ -32,7 +32,7 @@ export function useSummarizer() {
 		try {
 			const summarizer = await createSummarizer(options?.type);
 			const stream = await summarizer.summarizeStreaming(content.trim());
-			let fullResponse = "";
+			let fullResponse = '';
 
 			for await (const chunk of stream) {
 				fullResponse = chunk.trim();
@@ -42,14 +42,10 @@ export function useSummarizer() {
 			}
 		} catch (error) {
 			const errorMessage =
-				error instanceof Error
-					? error.message
-					: "Summarization failed. Please try again.";
+				error instanceof Error ? error.message : 'Summarization failed. Please try again.';
 			setError(errorMessage);
 			if (options?.onError) {
-				options.onError(
-					error instanceof Error ? error : new Error(errorMessage)
-				);
+				options.onError(error instanceof Error ? error : new Error(errorMessage));
 			}
 		} finally {
 			setIsSummarizing(false);

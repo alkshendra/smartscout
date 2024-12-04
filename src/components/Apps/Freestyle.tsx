@@ -76,20 +76,6 @@ export function Freestyle() {
 
 	return (
 		<div className="flex flex-col h-[calc(100vh-8rem)]">
-			<div className="flex items-center justify-between p-4 border-b border-surface-variant">
-				<div className="flex items-center gap-2">
-					<Bot size={24} className="text-primary" />
-					<h2 className="text-xl font-semibold">Freestyle Chat</h2>
-				</div>
-				<button
-					onClick={handleClear}
-					className="p-2 rounded-full hover:bg-surface-variant transition-colors"
-					title="Clear chat"
-				>
-					<Trash2 size={20} className="text-primary" />
-				</button>
-			</div>
-
 			<div className="flex-1 overflow-y-auto">
 				{messages.length === 0 ? (
 					<div className="h-full flex items-center justify-center text-center p-8">

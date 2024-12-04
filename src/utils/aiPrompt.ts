@@ -31,7 +31,7 @@ ${content ? `Here's the page Content: ${content}` : ''}`;
 				`Your browser doesn't support the Prompt API. If you're on Chrome, join the <a href="https://developer.chrome.com/docs/ai/built-in#get_an_early_preview">Early Preview Program</a> to enable it.`,
 			);
 		}
-		const session = await ai.languageModel.create({ systemPrompt });
+		const session = await (window as any).ai.languageModel.create({ systemPrompt });
 
 		let fullText = '';
 

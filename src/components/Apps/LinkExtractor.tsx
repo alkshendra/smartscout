@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Loader2 } from 'lucide-react';
-
+import { Loader } from '../Loader';
 // import ReactMarkdown from 'react-markdown';
 
 import { Modal } from '../ui/Modal/Modal';
@@ -54,8 +53,10 @@ export function LinkExtractor() {
 			</Modal>
 
 			{loading ? (
-				<div className="flex items-center justify-center my-8">
-					<Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
+				<div className="w-[400px] h-[600px] flex flex-col items-center justify-center">
+					{/* <Activity className="w-8 h-8 text-blue-500 animate-spin" /> */}
+					<Loader />
+					<p className="text-md mt-4">Analyzing Page Content</p>
 				</div>
 			) : links.length > 0 ? (
 				<LinkList links={links} />

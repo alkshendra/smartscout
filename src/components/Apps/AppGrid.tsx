@@ -7,15 +7,25 @@ import remarkGfm from 'remark-gfm';
 
 interface AppGridProps {
 	onAppClick: (appId: string, options?: Record<string, any>) => void;
-	insights: string | null;
+	insights: Record<string, string | number | null>;
 }
 
 export function AppGrid({ onAppClick, insights }: AppGridProps) {
 	return (
 		<div>
-			<div className="p-4 mb-8 bg-surface-variant rounded-xl">
-				{insights && <ReactMarkdown remarkPlugins={[remarkGfm]}>{insights}</ReactMarkdown>}
-			</div>
+			{/* {Object.keys(insights || {})?.length > 0 && (
+				<div className="p-4 mb-8 bg-surface-variant rounded-xl">
+					{insights?.readTime && (
+						<span className="px-4 py-2 bg-white text-bold">{insights.readTime}</span>
+					)}
+					{insights?.sentiment && (
+						<span className="px-4 py-2 bg-white text-bold">{insights.sentiment}</span>
+					)}
+					{insights?.language && (
+						<span className="px-4 py-2 bg-white text-bold">{insights.language}</span>
+					)}
+				</div>
+			)} */}
 			<button
 				key="summarizer"
 				onClick={() => onAppClick('summarizer', { initialTab: 'summarize' })}
