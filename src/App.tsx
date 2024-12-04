@@ -47,7 +47,7 @@ const curvedSvg = (
 
 export default function App() {
 	const [currentApp, setCurrentApp] = useState<AppState>({ id: null });
-	console.log('🚀 ~ App ~ currentApp:', currentApp);
+	// console.log('🚀 ~ App ~ currentApp:', currentApp);
 
 	const { insights } = usePageInsights();
 	console.log({ insights });

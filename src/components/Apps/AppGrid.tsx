@@ -2,8 +2,6 @@ import React from 'react';
 import { FileText, ArrowRight } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { apps } from '../../data/apps';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 
 interface AppGridProps {
 	onAppClick: (appId: string, options?: Record<string, any>) => void;
@@ -13,19 +11,28 @@ interface AppGridProps {
 export function AppGrid({ onAppClick, insights }: AppGridProps) {
 	return (
 		<div>
-			{/* {Object.keys(insights || {})?.length > 0 && (
+			{Object.keys(insights || {})?.length > 0 && (
 				<div className="p-4 mb-8 bg-surface-variant rounded-xl">
 					{insights?.readTime && (
-						<span className="px-4 py-2 bg-white text-bold">{insights.readTime}</span>
+						<p className="py-2">
+							<span className="text-primary font-bold">Read Time:</span>{' '}
+							{insights.readTime}
+						</p>
 					)}
 					{insights?.sentiment && (
-						<span className="px-4 py-2 bg-white text-bold">{insights.sentiment}</span>
+						<p className="py-2">
+							<span className="text-primary font-bold">Sentiment:</span>{' '}
+							{insights.sentiment}
+						</p>
 					)}
 					{insights?.language && (
-						<span className="px-4 py-2 bg-white text-bold">{insights.language}</span>
+						<p className="py-2">
+							<span className="text-primary font-bold">Language:</span>{' '}
+							{insights.language}
+						</p>
 					)}
 				</div>
-			)} */}
+			)}
 			<button
 				key="summarizer"
 				onClick={() => onAppClick('summarizer', { initialTab: 'summarize' })}

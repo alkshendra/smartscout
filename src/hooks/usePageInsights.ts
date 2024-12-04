@@ -1,9 +1,10 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { usePageInfo } from './usePageInfo';
 import { aiPrompt } from '../utils/aiPrompt';
+import { parseJSONFromMarkdown } from '../utils/parseJSONFromMarkdown';
 
 export function usePageInsights() {
-	const { content, markdownContent } = usePageInfo() || {};
+	const { content } = usePageInfo() || {};
 	const [insights, setInsights] = useState<string | null>(null);
 	const [isFetchingInsights, setIsFetchingInsights] = useState(false);
 	const [error, setError] = useState<string | null>(null);
@@ -19,14 +20,15 @@ export function usePageInsights() {
 		aiPrompt({
 			systemPrompt: `Use the following content to respond to the prompt: ${content}`,
 			prompt: `Get me "only the following information" and output in the JSON format:  
-			1. **Read time** (readTime key)
-			2. **Sentiment** (sentiment key)
-			3. **Language**  (language key)
+			1. (readTime key)
+			2. (sentiment key)
+			3. (language key)
 			Do not output any other information or text.`,
 			// content,
 			callbacks: {
 				onChunk: chunk => {
-					setInsights(chunk);
+					const parsedJSON = parseJSONFromMarkdown(chunk);
+					setInsights(parsedJSON);
 				},
 				onError: error => {
 					console.error('Failed to summarize:', error);

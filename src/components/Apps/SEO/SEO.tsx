@@ -1,4 +1,3 @@
-import { Activity } from 'lucide-react';
 import { SEOScore } from './SEOScore';
 import { SEOSuggestion } from './SEOSuggestion';
 import { useSEO } from '../../../hooks/useSEO';
@@ -10,7 +9,6 @@ export function SEO() {
 	if (loading && !analysis) {
 		return (
 			<div className="w-[400px] h-[600px] flex flex-col items-center justify-center">
-				{/* <Activity className="w-8 h-8 text-blue-500 animate-spin" /> */}
 				<Loader />
 				<p className="text-md mt-4">Analyzing Page Content</p>
 			</div>
